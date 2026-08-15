@@ -17,21 +17,24 @@ export default function ReadinessRing({ score }: { score: number | null }) {
   const color = score != null ? readinessColor(score) : "rust";
   const hex = COLOR_HEX[color];
 
-  useEffect(() => {
-    if (score == null) return;
-    const duration = 900;
-    const start = performance.now();
-    function tick(now: number) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayScore(Math.round(eased * score));
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }, [score]);
+useEffect(() => {
+  if (score == null) return;
+  const targetScore = score;
+  const duration = 900;
+  const start = performance.now();
+  function tick(now: number) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    setDisplayScore(Math.round(eased * targetScore));
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}, [score]);
 
   const offset =
-    score != null ? circumference - (displayScore / 100) * circumference : circumference;
+    score != null
+      ? circumference - (displayScore / 100) * circumference
+      : circumference;
 
   if (score == null) {
     return (
@@ -57,8 +60,20 @@ export default function ReadinessRing({ score }: { score: number | null }) {
           animate={{ opacity: [0.5, 0.9, 0.5] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
-        <svg width="128" height="128" viewBox="0 0 128 128" className="relative">
-          <circle cx="64" cy="64" r={radius} fill="none" stroke="#2A2D36" strokeWidth="8" />
+        <svg
+          width="128"
+          height="128"
+          viewBox="0 0 128 128"
+          className="relative"
+        >
+          <circle
+            cx="64"
+            cy="64"
+            r={radius}
+            fill="none"
+            stroke="#2A2D36"
+            strokeWidth="8"
+          />
           <motion.circle
             cx="64"
             cy="64"
@@ -75,7 +90,10 @@ export default function ReadinessRing({ score }: { score: number | null }) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-display font-bold text-3xl" style={{ color: hex }}>
+          <span
+            className="font-display font-bold text-3xl"
+            style={{ color: hex }}
+          >
             {displayScore}
           </span>
           <span className="font-mono text-[9px] uppercase tracking-wide text-bone-dim">
