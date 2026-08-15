@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #14151a;
+  color: #ece9e2;
+}
+
+/* Faint dot-grid, same as the mockup — kept subtle on purpose */
+.bg-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(236, 233, 226, 0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+}

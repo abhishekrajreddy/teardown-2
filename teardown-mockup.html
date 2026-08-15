@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teardown — brand &amp; UI mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#14151A;
+    --charcoal:#1D1F26;
+    --iron:#2A2D36;
+    --bone:#ECE9E2;
+    --bone-dim:#9A978E;
+    --ember:#E2853D;
+    --ember-dim:#7A5636;
+    --moss:#7C9A79;
+    --moss-dim:#465C46;
+    --rust:#B4472A;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#0B0C0F;
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    padding:48px 24px 96px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  /* ---------- intro ---------- */
+  .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ember);
+    margin:0 0 10px;
+  }
+  h1.title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:44px;
+    margin:0 0 8px;
+    letter-spacing:-.01em;
+  }
+  .lede{
+    color:var(--bone-dim);
+    font-size:16px;
+    max-width:560px;
+    line-height:1.6;
+    margin:0 0 56px;
+  }
+
+  section{margin-bottom:64px;}
+  .section-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--bone-dim);
+    border-bottom:1px solid var(--iron);
+    padding-bottom:12px;
+    margin-bottom:24px;
+  }
+
+  /* ---------- palette ---------- */
+  .palette{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:14px;
+  }
+  .swatch{
+    border-radius:var(--radius);
+    padding:16px 14px;
+    height:104px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border:1px solid var(--iron);
+  }
+  .swatch .name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;}
+  .swatch .hex{font-family:'IBM Plex Mono',monospace;font-size:12px;opacity:.85;}
+
+  /* ---------- type specimen ---------- */
+  .type-grid{display:flex;flex-direction:column;gap:28px;}
+  .type-row{display:flex;align-items:baseline;gap:24px;border-bottom:1px solid var(--iron);padding-bottom:24px;}
+  .type-role{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--bone-dim);
+    width:140px;
+    flex-shrink:0;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .type-sample.display{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:32px;}
+  .type-sample.body{font-family:'Inter',sans-serif;font-weight:400;font-size:18px;color:var(--bone-dim);}
+  .type-sample.mono{font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:16px;color:var(--ember);}
+
+  /* ---------- shared mockup chrome ---------- */
+  .device-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--bone-dim);
+    margin-bottom:14px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- web dashboard mockup ---------- */
+  .browser{
+    background:var(--graphite);
+    border:1px solid var(--iron);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .browser-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:12px 16px;background:var(--charcoal);
+    border-bottom:1px solid var(--iron);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--iron);}
+  .dashboard{display:flex;min-height:520px;}
+  .rail{
+    width:72px;background:var(--charcoal);
+    border-right:1px solid var(--iron);
+    display:flex;flex-direction:column;align-items:center;
+    padding:20px 0;gap:28px;
+  }
+  .rail .mark{
+    width:34px;height:34px;border-radius:8px;background:var(--ember);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--graphite);font-size:16px;
+    margin-bottom:12px;
+  }
+  .rail .icon{
+    width:34px;height:34px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--bone-dim);font-size:16px;
+  }
+  .rail .icon.active{background:var(--iron);color:var(--ember);}
+  .main{flex:1;padding:32px 36px;background:
+    radial-gradient(circle at 1px 1px, rgba(236,233,226,0.05) 1px, transparent 0) 0 0/22px 22px,
+    var(--graphite);
+  }
+  .row-between{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+  .page-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;}
+  .page-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--bone-dim);}
+
+  .hero-card{
+    background:var(--charcoal);
+    border:1px solid var(--iron);
+    border-radius:14px;
+    padding:28px 32px;
+    margin-bottom:20px;
+  }
+  .hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--bone-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+  .hero-number{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:52px;color:var(--moss);line-height:1;}
+  .hero-sub{font-family:'Inter',sans-serif;font-size:14px;color:var(--bone-dim);margin-top:10px;}
+
+  .quick-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+  .quick-btn{
+    background:var(--charcoal);border:1px solid var(--iron);border-radius:var(--radius);
+    padding:16px 18px;font-family:'Inter',sans-serif;font-weight:500;font-size:14px;color:var(--bone);
+    display:flex;align-items:center;gap:10px;
+  }
+  .quick-btn .plus{color:var(--ember);font-family:'Space Grotesk',sans-serif;font-weight:700;}
+
+  .chart-card{
+    background:var(--charcoal);border:1px solid var(--iron);border-radius:14px;
+    padding:26px 30px 34px;position:relative;
+  }
+  .chart-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:4px;}
+  .chart-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);margin-bottom:18px;}
+
+  /* ---------- mobile mockup ---------- */
+  .mobile-wrap{display:flex;gap:40px;flex-wrap:wrap;}
+  .phone{
+    width:300px;background:var(--graphite);border:1px solid var(--iron);
+    border-radius:32px;padding:14px;position:relative;
+  }
+  .phone-screen{
+    background:var(--graphite);border-radius:20px;overflow:hidden;
+    min-height:560px;display:flex;flex-direction:column;
+    background-image:radial-gradient(circle at 1px 1px, rgba(236,233,226,0.05) 1px, transparent 0);
+    background-size:18px 18px;
+  }
+  .status{display:flex;justify-content:space-between;padding:10px 20px 4px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);}
+  .mobile-body{padding:6px 18px 18px;flex:1;display:flex;flex-direction:column;}
+  .m-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;margin:8px 0 2px;}
+  .m-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);margin-bottom:16px;}
+  .m-hero{
+    background:var(--charcoal);border:1px solid var(--iron);border-radius:14px;
+    padding:18px 20px;margin-bottom:14px;
+  }
+  .m-hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--bone-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .m-hero-number{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:var(--moss);}
+  .m-hero-sub{font-family:'Inter',sans-serif;font-size:12px;color:var(--bone-dim);margin-top:6px;}
+  .m-row{
+    display:flex;align-items:center;gap:12px;
+    background:var(--charcoal);border:1px solid var(--iron);border-radius:12px;
+    padding:14px 16px;margin-bottom:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+  }
+  .m-row .swatch-dot{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--graphite);}
+  .m-tabbar{
+    margin-top:auto;display:flex;justify-content:space-between;
+    border-top:1px solid var(--iron);padding:14px 6px 4px;
+  }
+  .m-tab{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--bone-dim);text-align:center;}
+  .m-tab.active{color:var(--ember);}
+  .m-tab .dotcell{width:6px;height:6px;border-radius:50%;background:currentColor;margin:0 auto 6px;}
+
+  /* ---------- signature: teardown annotation lines ---------- */
+  svg text{font-family:'IBM Plex Mono',monospace;}
+  .annot-label{fill:var(--bone-dim);font-size:10px;}
+  .annot-line{stroke:var(--bone-dim);stroke-width:1;stroke-dasharray:3 3;}
+  .annot-dot{fill:var(--ember);}
+
+  .note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--bone-dim);
+    max-width:560px;line-height:1.7;margin-top:18px;
+  }
+
+  /* ---------- range tabs ---------- */
+  .range-tabs{display:flex;gap:6px;}
+  .range-tab{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);
+    padding:6px 12px;border-radius:6px;border:1px solid var(--iron);
+  }
+  .range-tab.active{color:var(--ember);border-color:var(--ember-dim);background:rgba(226,133,61,0.08);}
+
+  /* ---------- legend ---------- */
+  .legend{display:flex;gap:18px;margin-top:14px;}
+  .legend-item{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);}
+  .legend-swatch{width:10px;height:10px;border-radius:2px;}
+
+  /* ---------- list rows (supplements / experiments) ---------- */
+  .list-card{background:var(--charcoal);border:1px solid var(--iron);border-radius:14px;overflow:hidden;}
+  .list-row{
+    display:flex;align-items:center;gap:16px;padding:18px 24px;
+    border-bottom:1px solid var(--iron);
+  }
+  .list-row:last-child{border-bottom:none;}
+  .list-icon{
+    width:38px;height:38px;border-radius:9px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--graphite);
+  }
+  .list-main{flex:1;}
+  .list-name{font-family:'Inter',sans-serif;font-weight:500;font-size:14px;}
+  .list-meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);margin-top:3px;}
+  .badge{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;
+    padding:4px 10px;border-radius:20px;
+  }
+  .badge.active{color:var(--moss);background:rgba(124,154,121,0.12);}
+  .badge.watch{color:var(--ember);background:rgba(226,133,61,0.12);}
+  .badge.done{color:var(--bone-dim);background:rgba(154,151,142,0.12);}
+
+  /* ---------- experiment card ---------- */
+  .exp-card{
+    background:var(--charcoal);border:1px solid var(--iron);border-radius:14px;
+    padding:22px 26px;margin-bottom:14px;
+  }
+  .exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+  .exp-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;}
+  .exp-window{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--bone-dim);margin-top:4px;}
+  .exp-compare{display:flex;gap:32px;}
+  .exp-stat-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--bone-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .exp-stat-value{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;}
+  .exp-stat-value.result{color:var(--moss);}
+
+  /* ---------- mobile compact chart ---------- */
+  .m-chart-card{
+    background:var(--charcoal);border:1px solid var(--iron);border-radius:14px;
+    padding:16px 16px 14px;margin-bottom:12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Brand &amp; UI direction — v1</p>
+  <h1 class="title">Teardown</h1>
+  <p class="lede">Every rep tears the fiber down so it rebuilds stronger. The visual language borrows from lab notebooks and exploded-diagram annotation — quiet, dark, precise — so the data reads like evidence, not decoration.</p>
+
+  <section>
+    <p class="section-label">Color palette</p>
+    <div class="palette">
+      <div class="swatch" style="background:var(--graphite);"><span class="name">Graphite</span><span class="hex">#14151A — page</span></div>
+      <div class="swatch" style="background:var(--charcoal);"><span class="name">Charcoal</span><span class="hex">#1D1F26 — surface</span></div>
+      <div class="swatch" style="background:var(--iron);"><span class="name">Iron</span><span class="hex">#2A2D36 — border</span></div>
+      <div class="swatch" style="background:var(--bone);color:var(--graphite);"><span class="name">Bone</span><span class="hex">#ECE9E2 — text</span></div>
+      <div class="swatch" style="background:var(--ember);color:var(--graphite);"><span class="name">Ember</span><span class="hex">#E2853D — accent</span></div>
+      <div class="swatch" style="background:var(--moss);color:var(--graphite);"><span class="name">Moss</span><span class="hex">#7C9A79 — positive trend</span></div>
+    </div>
+    <p class="note">Ember is the only warm, saturated color in the system — used for the one accent action per screen (a CTA, an active nav state, a supplement marker). Moss appears only when a trend is genuinely improving. Everything else stays quiet on purpose.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Typography</p>
+    <div class="type-grid">
+      <div class="type-row">
+        <span class="type-role">Display<br>Space Grotesk</span>
+        <span class="type-sample display">Rebuild by 6% this week</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Body<br>Inter</span>
+        <span class="type-sample body">Bench press volume is up against your 4-week baseline, and your average sleep has climbed with it.</span>
+      </div>
+      <div class="type-row">
+        <span class="type-role">Data / mono<br>IBM Plex Mono</span>
+        <span class="type-sample mono">142.5kg × 5 reps · RIR 2 · 23 JUL 2026</span>
+      </div>
+    </div>
+    <p class="note">Space Grotesk carries the brand's mechanical, schematic voice for headlines. Inter stays neutral for everything you read. IBM Plex Mono renders every number, date, and annotation — so data always looks like data, never like prose.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Web — dashboard (Today)</p>
+    <div class="browser">
+      <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="dashboard">
+        <div class="rail">
+          <div class="mark">T</div>
+          <div class="icon active"><i>&#9679;</i></div>
+          <div class="icon">&#9633;</div>
+          <div class="icon">&#8776;</div>
+          <div class="icon">&#9670;</div>
+          <div class="icon">&#9651;</div>
+        </div>
+        <div class="main">
+          <div class="row-between">
+            <span class="page-title">Today</span>
+            <span class="page-date">THU 23 JUL 2026</span>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-eyebrow">Bench press · volume vs 4-week baseline</div>
+            <div class="hero-number">+6%</div>
+            <div class="hero-sub">You're trending up. Sleep averaged 7.4h this week, your highest in a month.</div>
+          </div>
+
+          <div class="quick-row">
+            <div class="quick-btn"><span class="plus">+</span> Log workout</div>
+            <div class="quick-btn"><span class="plus">+</span> Log supplement</div>
+            <div class="quick-btn"><span class="plus">+</span> Daily check-in</div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">Timeline</div>
+            <div class="chart-sub">strength trend · supplement bands · sleep overlay</div>
+            <svg viewBox="0 0 560 190" width="100%" height="190">
+              <polyline points="0,140 60,132 120,120 180,124 240,104 300,96 360,80 420,70 480,58 540,44"
+                fill="none" stroke="#E2853D" stroke-width="2.5"/>
+              <rect x="180" y="160" width="200" height="8" rx="4" fill="#465C46"/>
+              <circle cx="240" cy="104" r="4" class="annot-dot"/>
+              <line x1="240" y1="104" x2="240" y2="20" class="annot-line"/>
+              <text x="246" y="16" class="annot-label">day 14 — started creatine</text>
+              <circle cx="420" cy="70" r="4" class="annot-dot"/>
+              <line x1="420" y1="70" x2="470" y2="14" class="annot-line"/>
+              <text x="474" y="10" class="annot-label">7.4h avg sleep begins</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Mobile — Today &amp; Log</p>
+    <div class="mobile-wrap">
+
+      <div>
+        <p class="device-label">Today</p>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="status"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679; &#128225; 100%</span></div>
+            <div class="mobile-body">
+              <div class="m-title">Today</div>
+              <div class="m-date">THU 23 JUL · WEEK 6</div>
+
+              <div class="m-hero">
+                <div class="m-hero-eyebrow">Bench press vs baseline</div>
+                <div class="m-hero-number">+6%</div>
+                <div class="m-hero-sub">Trending up — sleep's the likely driver.</div>
+              </div>
+
+              <div class="m-row"><span class="swatch-dot" style="background:var(--ember);">+</span> Log workout</div>
+              <div class="m-row"><span class="swatch-dot" style="background:var(--ember);">+</span> Log supplement</div>
+              <div class="m-row"><span class="swatch-dot" style="background:var(--moss);">&#10003;</span> Daily check-in</div>
+
+              <div class="m-tabbar">
+                <div class="m-tab active"><div class="dotcell"></div>Today</div>
+                <div class="m-tab"><div class="dotcell"></div>Log</div>
+                <div class="m-tab"><div class="dotcell"></div>Timeline</div>
+                <div class="m-tab"><div class="dotcell"></div>Supps</div>
+                <div class="m-tab"><div class="dotcell"></div>More</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="device-label">Log workout</p>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="status"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679; &#128225; 100%</span></div>
+            <div class="mobile-body">
+              <div class="m-title">Bench press</div>
+              <div class="m-date">LAST LOGGED · 140kg × 5 · RIR 2</div>
+
+              <div class="m-hero">
+                <div class="m-hero-eyebrow">Set 3 of 4</div>
+                <div class="m-hero-number" style="color:var(--bone);font-size:28px;">142.5<span style="font-size:16px;color:var(--bone-dim);"> kg</span></div>
+                <div class="m-hero-sub">5 reps · RIR 2 · felt strong</div>
+              </div>
+
+              <div class="m-row">Weight &nbsp;<span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--ember);">142.5 kg</span></div>
+              <div class="m-row">Reps &nbsp;<span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--ember);">5</span></div>
+              <div class="m-row">RIR &nbsp;<span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--ember);">2</span></div>
+
+              <div class="m-tabbar">
+                <div class="m-tab"><div class="dotcell"></div>Today</div>
+                <div class="m-tab active"><div class="dotcell"></div>Log</div>
+                <div class="m-tab"><div class="dotcell"></div>Timeline</div>
+                <div class="m-tab"><div class="dotcell"></div>Supps</div>
+                <div class="m-tab"><div class="dotcell"></div>More</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Web — Timeline (full)</p>
+    <div class="browser">
+      <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="dashboard">
+        <div class="rail">
+          <div class="mark">T</div>
+          <div class="icon">&#9679;</div>
+          <div class="icon">&#9633;</div>
+          <div class="icon active">&#8776;</div>
+          <div class="icon">&#9670;</div>
+          <div class="icon">&#9651;</div>
+        </div>
+        <div class="main">
+          <div class="row-between">
+            <span class="page-title">Timeline</span>
+            <div class="range-tabs">
+              <span class="range-tab">4W</span>
+              <span class="range-tab active">12W</span>
+              <span class="range-tab">All</span>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">Bench press volume · sleep · supplements</div>
+            <div class="chart-sub">week 1 – week 12 · mesocycle 3</div>
+            <svg viewBox="0 0 560 220" width="100%" height="220">
+              <polyline points="0,160 46,155 92,145 138,148 184,128 230,120 276,104 322,94 368,78 414,66 460,52 506,38"
+                fill="none" stroke="#E2853D" stroke-width="2.5"/>
+              <polyline points="0,190 46,186 92,182 138,170 184,160 230,150 276,146 322,132 368,120 414,110 460,100 506,90"
+                fill="none" stroke="#7C9A79" stroke-width="2" stroke-dasharray="1 0" opacity="0.85"/>
+              <rect x="138" y="204" width="150" height="7" rx="3.5" fill="#465C46"/>
+              <rect x="322" y="204" width="184" height="7" rx="3.5" fill="#7A5636"/>
+
+              <circle cx="184" cy="128" r="4" class="annot-dot"/>
+              <line x1="184" y1="128" x2="150" y2="14" class="annot-line"/>
+              <text x="60" y="10" class="annot-label">week 4 — started creatine</text>
+
+              <circle cx="322" cy="94" r="4" class="annot-dot"/>
+              <line x1="322" y1="94" x2="330" y2="30" class="annot-line"/>
+              <text x="336" y="26" class="annot-label">week 7 — added magnesium</text>
+
+              <circle cx="460" cy="52" r="4" class="annot-dot"/>
+              <line x1="460" y1="52" x2="500" y2="60" class="annot-line"/>
+              <text x="466" y="76" class="annot-label">week 10 — plateau broke</text>
+            </svg>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch" style="background:var(--ember);"></span>Strength volume</div>
+              <div class="legend-item"><span class="legend-swatch" style="background:var(--moss);"></span>Sleep quality</div>
+              <div class="legend-item"><span class="legend-swatch" style="background:var(--moss-dim);"></span>Creatine active</div>
+              <div class="legend-item"><span class="legend-swatch" style="background:var(--ember-dim);"></span>Magnesium active</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Web — Supplements</p>
+    <div class="browser">
+      <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="dashboard">
+        <div class="rail">
+          <div class="mark">T</div>
+          <div class="icon">&#9679;</div>
+          <div class="icon">&#9633;</div>
+          <div class="icon">&#8776;</div>
+          <div class="icon active">&#9670;</div>
+          <div class="icon">&#9651;</div>
+        </div>
+        <div class="main">
+          <div class="row-between">
+            <span class="page-title">Supplements</span>
+            <div class="quick-btn" style="margin:0;"><span class="plus">+</span> Add supplement</div>
+          </div>
+
+          <div class="list-card">
+            <div class="list-row">
+              <div class="list-icon" style="background:var(--ember);">Cr</div>
+              <div class="list-main">
+                <div class="list-name">Creatine monohydrate</div>
+                <div class="list-meta">5g · morning · started 28 days ago</div>
+              </div>
+              <span class="badge active">Active</span>
+            </div>
+            <div class="list-row">
+              <div class="list-icon" style="background:var(--moss);">Mg</div>
+              <div class="list-main">
+                <div class="list-name">Magnesium glycinate</div>
+                <div class="list-meta">400mg · evening · started 11 days ago</div>
+              </div>
+              <span class="badge watch">Watching</span>
+            </div>
+            <div class="list-row">
+              <div class="list-icon" style="background:var(--bone-dim);">D3</div>
+              <div class="list-main">
+                <div class="list-name">Vitamin D3</div>
+                <div class="list-meta">2000 IU · morning · started 3 months ago</div>
+              </div>
+              <span class="badge active">Active</span>
+            </div>
+            <div class="list-row">
+              <div class="list-icon" style="background:var(--iron);color:var(--bone-dim);">Zn</div>
+              <div class="list-main">
+                <div class="list-name">Zinc</div>
+                <div class="list-meta">15mg · evening · stopped 6 days ago</div>
+              </div>
+              <span class="badge done">Stopped</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Web — Experiments</p>
+    <div class="browser">
+      <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="dashboard">
+        <div class="rail">
+          <div class="mark">T</div>
+          <div class="icon">&#9679;</div>
+          <div class="icon">&#9633;</div>
+          <div class="icon">&#8776;</div>
+          <div class="icon">&#9670;</div>
+          <div class="icon active">&#9651;</div>
+        </div>
+        <div class="main">
+          <div class="row-between">
+            <span class="page-title">Experiments</span>
+            <div class="quick-btn" style="margin:0;"><span class="plus">+</span> New experiment</div>
+          </div>
+
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-name">Does magnesium improve sleep quality?</div>
+                <div class="exp-window">day 6 of 14 · started 11 days ago</div>
+              </div>
+              <span class="badge watch">In progress</span>
+            </div>
+            <div class="exp-compare">
+              <div>
+                <div class="exp-stat-label">Baseline avg</div>
+                <div class="exp-stat-value">6.1<span style="font-size:13px;color:var(--bone-dim);">/10</span></div>
+              </div>
+              <div>
+                <div class="exp-stat-label">Since starting</div>
+                <div class="exp-stat-value result">7.4<span style="font-size:13px;color:var(--bone-dim);">/10</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-name">Creatine effect on bench volume</div>
+                <div class="exp-window">complete · 28-day window</div>
+              </div>
+              <span class="badge done">Complete</span>
+            </div>
+            <div class="exp-compare">
+              <div>
+                <div class="exp-stat-label">Baseline avg</div>
+                <div class="exp-stat-value">1,840<span style="font-size:13px;color:var(--bone-dim);"> kg vol.</span></div>
+              </div>
+              <div>
+                <div class="exp-stat-label">During experiment</div>
+                <div class="exp-stat-value result">2,050<span style="font-size:13px;color:var(--bone-dim);"> kg vol.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Mobile — Timeline &amp; Supplements</p>
+    <div class="mobile-wrap">
+
+      <div>
+        <p class="device-label">Timeline</p>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="status"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679; &#128225; 100%</span></div>
+            <div class="mobile-body">
+              <div class="m-title">Timeline</div>
+              <div class="m-date">MESOCYCLE 3 · WEEK 1–12</div>
+
+              <div class="m-chart-card">
+                <svg viewBox="0 0 260 120" width="100%" height="120">
+                  <polyline points="0,90 40,86 80,78 120,68 160,56 200,42 240,28"
+                    fill="none" stroke="#E2853D" stroke-width="2"/>
+                  <rect x="60" y="106" width="70" height="5" rx="2.5" fill="#465C46"/>
+                  <rect x="150" y="106" width="90" height="5" rx="2.5" fill="#7A5636"/>
+                  <circle cx="160" cy="56" r="3" class="annot-dot"/>
+                  <line x1="160" y1="56" x2="180" y2="14" class="annot-line"/>
+                  <text x="150" y="10" class="annot-label" style="font-size:8px;">week 7 — magnesium</text>
+                </svg>
+                <div class="legend" style="margin-top:8px;">
+                  <div class="legend-item"><span class="legend-swatch" style="background:var(--ember);"></span>Volume</div>
+                  <div class="legend-item"><span class="legend-swatch" style="background:var(--moss-dim);"></span>Creatine</div>
+                </div>
+              </div>
+
+              <div class="m-row">Bench press &nbsp;<span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--moss);">+11%</span></div>
+              <div class="m-row">Squat &nbsp;<span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--moss);">+6%</span></div>
+              <div class="m-row">Sleep quality &nbsp;<span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--moss);">+1.3</span></div>
+
+              <div class="m-tabbar">
+                <div class="m-tab"><div class="dotcell"></div>Today</div>
+                <div class="m-tab"><div class="dotcell"></div>Log</div>
+                <div class="m-tab active"><div class="dotcell"></div>Timeline</div>
+                <div class="m-tab"><div class="dotcell"></div>Supps</div>
+                <div class="m-tab"><div class="dotcell"></div>More</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="device-label">Supplements</p>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="status"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679; &#128225; 100%</span></div>
+            <div class="mobile-body">
+              <div class="m-title">Supplements</div>
+              <div class="m-date">4 TRACKED · 3 ACTIVE</div>
+
+              <div class="m-row"><span class="swatch-dot" style="background:var(--ember);">Cr</span>Creatine <span style="margin-left:auto;" class="badge active">Active</span></div>
+              <div class="m-row"><span class="swatch-dot" style="background:var(--moss);">Mg</span>Magnesium <span style="margin-left:auto;" class="badge watch">Watching</span></div>
+              <div class="m-row"><span class="swatch-dot" style="background:var(--bone-dim);">D3</span>Vitamin D3 <span style="margin-left:auto;" class="badge active">Active</span></div>
+              <div class="m-row"><span class="swatch-dot" style="background:var(--iron);color:var(--bone-dim);">Zn</span>Zinc <span style="margin-left:auto;" class="badge done">Stopped</span></div>
+
+              <div class="m-tabbar">
+                <div class="m-tab"><div class="dotcell"></div>Today</div>
+                <div class="m-tab"><div class="dotcell"></div>Log</div>
+                <div class="m-tab"><div class="dotcell"></div>Timeline</div>
+                <div class="m-tab active"><div class="dotcell"></div>Supps</div>
+                <div class="m-tab"><div class="dotcell"></div>More</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

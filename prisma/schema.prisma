@@ -1,0 +1,183 @@
+// Teardown — Prisma schema
+// Postgres. Kept relational and flat on purpose: every table below maps
+// 1:1 to something in PRD section 5, so adding a feature later means
+// adding a table, not restructuring existing ones.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // pooled (port 6543) — used by the running app
+  directUrl = env("DIRECT_URL") // direct (port 5432) — used only by `prisma migrate`
+}
+
+// ── Auth ──────────────────────────────────────────────
+// Single-user today, but a real User table (not an env-var hack) means
+// adding a second account later is a signup form, not a migration.
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String?
+  timezone     String   @default("Europe/London")
+  apiToken     String?  @unique
+  createdAt    DateTime @default(now())
+
+  sessions    WorkoutSession[]
+  supplements Supplement[]
+  checkins    DailyCheckin[]
+  metrics     HealthMetric[]
+  experiments Experiment[]
+  routines    Routine[]
+  exercises   Exercise[]
+}
+
+// ── Exercise taxonomy ─────────────────────────────────
+model Exercise {
+  id              String @id @default(cuid())
+  userId          String? // null = shared default (seeded); set = one user's custom exercise
+  user            User?  @relation(fields: [userId], references: [id])
+  name            String
+  bodyPart        String // "chest", "back", "legs", "shoulders", "arms", "core"
+  muscleGroup     String? // "upper chest", "quads"...
+  movementPattern String? // "horizontal press", "hinge", "squat", "pull"...
+  equipment       String? // "barbell", "dumbbell", "cable", "machine", "bodyweight"
+  isCustom        Boolean @default(false)
+
+  variationOfId String?
+  variationOf   Exercise?  @relation("ExerciseFamily", fields: [variationOfId], references: [id])
+  variations    Exercise[] @relation("ExerciseFamily")
+
+  sets           WorkoutSet[]
+  routineEntries RoutineExercise[]
+}
+
+// ── Routines (optional checklist, never a prescribed plan) ──
+model Routine {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  name   String
+
+  exercises RoutineExercise[]
+  sessions  WorkoutSession[]
+}
+
+model RoutineExercise {
+  id         String   @id @default(cuid())
+  routineId  String
+  routine    Routine  @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  order      Int
+}
+
+// ── Workouts ──────────────────────────────────────────
+model WorkoutSession {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  date        DateTime  @default(now())
+  routineId   String?
+  routine     Routine?  @relation(fields: [routineId], references: [id])
+  overallFeel Int? // 1-5, the only session-level subjective field
+  notes       String?
+
+  sets WorkoutSet[]
+
+  @@index([userId, date])
+}
+
+model WorkoutSet {
+  id         String         @id @default(cuid())
+  sessionId  String
+  session    WorkoutSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exerciseId String
+  exercise   Exercise       @relation(fields: [exerciseId], references: [id])
+  setNumber  Int
+  weight     Float
+  reps       Int
+  rir        Int? // 0-4, reps in reserve
+  setType    String         @default("normal") // "normal" | "warmup" | "failure" | "dropset" — only warmup is excluded from PR/1RM
+  notes      String?
+
+  @@index([exerciseId])
+}
+
+// ── Supplements ───────────────────────────────────────
+model Supplement {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  name         String
+  category     String? // "vitamin", "mineral", "performance", "other"
+  purpose      String? // free text — why you're taking it, e.g. "sleep quality, evening magnesium"
+  dose         Float
+  unit         String // "g", "mg", "IU"
+  timeOfDay    String? // "morning", "evening"
+  startDate    DateTime
+  endDate      DateTime?
+
+  // a dose change creates a NEW row that supersedes the old one,
+  // so the timeline can show "dose increased" as its own event
+  supersedesId String?
+  supersedes   Supplement?  @relation("DoseHistory", fields: [supersedesId], references: [id])
+  supersededBy Supplement[] @relation("DoseHistory")
+
+  logs SupplementLog[]
+
+  @@index([userId, startDate])
+}
+
+model SupplementLog {
+  id           String     @id @default(cuid())
+  supplementId String
+  supplement   Supplement @relation(fields: [supplementId], references: [id], onDelete: Cascade)
+  date         DateTime
+  taken        Boolean
+
+  @@unique([supplementId, date])
+}
+
+// ── Daily state ───────────────────────────────────────
+model DailyCheckin {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  date         DateTime
+  sleepHours   Float?
+  sleepQuality Int? // 1-5
+  mood         Int? // 1-5
+  energy       Int? // 1-5
+  stress       Int? // 1-5, optional
+  notes        String?
+
+  @@unique([userId, date])
+}
+
+// ── Wearables (source-agnostic from day one) ──────────
+model HealthMetric {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  date       DateTime
+  metricType String // "hr", "hrv", "sleep_stage", "vo2max", "spo2", "resting_hr"
+  value      Float
+  source     String // "manual" | "apple_health" | "garmin" | "whoop"
+
+  @@index([userId, metricType, date])
+}
+
+// ── Insight layer ─────────────────────────────────────
+model Experiment {
+  id                  String    @id @default(cuid())
+  userId              String
+  user                User      @relation(fields: [userId], references: [id])
+  variableDescription String
+  startDate           DateTime
+  endDate             DateTime?
+  baselineSummary     Json?
+  resultSummary       Json?
+}
